@@ -9,16 +9,12 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
-
 app.use(logger);
 app.use(cors());
 app.use(express.json());
-
-
-app.use('/notes', notesRoutes);
+app.use(notesRoutes);
 
 app.use(notFoundHandler);
-
 app.use(errorHandler);
 
 const PORT = Number(process.env.PORT) || 3000;
