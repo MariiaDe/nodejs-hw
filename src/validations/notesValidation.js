@@ -1,4 +1,5 @@
-import { Joi, Segments } from 'celebrate';
+import { Segments } from 'celebrate';
+import Joi from 'joi';
 import mongoose from 'mongoose';
 import { TAGS } from '../constants/tags.js';
 

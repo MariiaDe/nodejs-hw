@@ -15,15 +15,19 @@ const noteSchema = new mongoose.Schema(
     },
     tag: {
       type: String,
-      enum: TAGS, // 🔴 тепер беремо з constants
+      enum: TAGS,
       default: 'Todo',
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
   },
   {
     timestamps: true,
   }
 );
-
 
 noteSchema.index({ title: 'text', content: 'text' });
 
