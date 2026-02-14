@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
-import { Readable } from 'stream';
+import streamifier from 'streamifier';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -7,20 +7,15 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const saveFileToCloudinary = (buffer) => {
-  return new Promise((resolve, reject) => {
+export const saveFileToCloudinary = (buffer) =>
+  new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       { folder: 'avatars' },
-      (error, result) => {
-        if (error) return reject(error);
-        resolve(result);
+      (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
       }
     );
 
-    const readable = new Readable();
-    readable._read = () => {};
-    readable.push(buffer);
-    readable.push(null);
-    readable.pipe(stream);
+    streamifier.createReadStream(buffer).pipe(stream);
   });
-};
