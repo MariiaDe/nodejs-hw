@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
-
 import {
   registerUser,
   loginUser,
@@ -9,7 +8,6 @@ import {
   requestResetEmail,
   resetPassword,
 } from '../controllers/authController.js';
-
 import {
   registerUserSchema,
   loginUserSchema,
@@ -31,10 +29,6 @@ router.post(
   loginUser
 );
 
-router.post('/auth/refresh', refreshUserSession);
-
-router.post('/auth/logout', logoutUser);
-
 router.post(
   '/auth/request-reset-email',
   celebrate({ [Segments.BODY]: requestResetEmailSchema }),
@@ -46,5 +40,8 @@ router.post(
   celebrate({ [Segments.BODY]: resetPasswordSchema }),
   resetPassword
 );
+
+router.post('/auth/refresh', refreshUserSession);
+router.post('/auth/logout', logoutUser);
 
 export default router;
